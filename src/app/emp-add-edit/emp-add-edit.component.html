@@ -1,0 +1,67 @@
+<div mat-dialog-title>
+    <h1>Пациент</h1>
+</div>
+<form [formGroup]="empForm">
+    <div mat-dialog-content class = "content">
+        <div class = "row">       
+            <mat-form-field appearence="outline">
+                <mat-label>Имя</mat-label>  
+                <input matInput type="text"  placeholder="Иван" formControlName="firstname">
+            </mat-form-field>
+            <mat-form-field appearence="outline">
+                <mat-label>Фамилия</mat-label>  
+                <input matInput type="text" placeholder="Иванов" formControlName="lastname">
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field appearence = "outline">
+                <mat-label>Дата Рождения</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dob" placeholder="Выберите дату" [max]="maxDate">
+                <mat-hint>ММ/ДД/ГГ</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class = "row">
+            <mat-form-field>
+                <mat-label>Поликлиники</mat-label>
+                <mat-select formControlName="clinic">
+                    <mat-option *ngFor="let val of Clinic" [value]="val">{{ val }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class = "row">       
+            <mat-form-field appearence="outline">
+                <mat-label>Email</mat-label>  
+                <input matInput type="text" placeholder="...@gmail.com" formControlName="email">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <section class="example-section">
+                <mat-checkbox class="example-margin" formControlName="policy">Наличие полиса</mat-checkbox>
+            </section>
+        </div>
+        <div class = "row">       
+            <mat-form-field appearence="outline">
+                <mat-label>Номер телефона</mat-label>  
+                <input matInput type="text" [textMask]="createPhoneNumberMask()" placeholder="+7 (___) ___-__-__"  formControlName="mask">
+            </mat-form-field>
+        </div>
+        
+        
+    </div>
+    
+
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button (click)=closeDialog() type="basic">
+            Отмена
+        </button>
+        <button mat-raised-button color = 'primary' type="submit" (click)="oneFormSubmit()" [disabled]="!empForm.valid" >
+            Сохранить
+        </button>
+    </div>
+    <div *ngIf="!empForm.valid" class="error-message">
+        Заполните все данные
+    </div>
+</form>
